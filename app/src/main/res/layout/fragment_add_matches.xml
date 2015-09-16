@@ -1,0 +1,116 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    tools:context="com.ojcity.android.myscorecards.Fragments.AddMatchesFragment">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="1">
+
+        <TextView
+            android:id="@+id/a_side_label"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            android:elevation="5dp"
+            android:text="@string/a_side_fighter"
+            android:textColor="@color/primary_text"
+            android:textStyle="bold" />
+
+        <fr.ganfra.materialspinner.MaterialSpinner
+            android:id="@+id/a_side_spinner"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/a_side_label"
+            app:ms_arrowColor="#0000FF"
+            app:ms_arrowSize="16dp"
+            app:ms_hint="A-SIDE"
+            app:ms_multiline="true" />
+
+    </RelativeLayout>
+
+    <!-- FIGHTER 2 -->
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="1">
+
+        <TextView
+            android:id="@+id/b_side_label"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_centerVertical="true"
+            android:elevation="5dp"
+            android:text="@string/b_side_fighter"
+            android:textColor="@color/primary_text"
+            android:textStyle="bold" />
+
+        <fr.ganfra.materialspinner.MaterialSpinner
+            android:id="@+id/b_side_spinner"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/b_side_label"
+            app:ms_arrowColor="#0000FF"
+            app:ms_arrowSize="16dp"
+            app:ms_hint="B-SIDE"
+            app:ms_multiline="true" />
+
+    </RelativeLayout>
+    <!-- END FIGHTER SELECTION -->
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="1">
+
+        <TextView
+            android:id="@+id/howmanyrounds"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_above="@+id/round_spinner"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:elevation="5dp"
+            android:text="How many rounds?"
+            android:textColor="@color/primary_text"
+            android:textStyle="bold" />
+
+        <fr.ganfra.materialspinner.MaterialSpinner
+            android:id="@+id/round_spinner"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_above="@+id/score_button"
+            app:ms_alignLabels="true"
+            app:ms_arrowColor="#0000FF"
+            app:ms_arrowSize="16dp"
+            app:ms_floatingLabelColor="#00FF00"
+            app:ms_floatingLabelText="floating label"
+            app:ms_hint="scheduled for"
+            app:ms_multiline="true" />
+
+        <Button
+            android:id="@+id/score_button"
+            style="?android:attr/buttonStyleSmall"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            android:onClick="startActivityScore"
+            android:text="SCORE IT" />
+
+    </RelativeLayout>
+
+</LinearLayout>

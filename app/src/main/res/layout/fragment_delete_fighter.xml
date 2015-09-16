@@ -1,0 +1,54 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="com.ojcity.android.myscorecards.Fragments.DeleteFighterFragment">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:paddingBottom="@dimen/activity_vertical_margin"
+        android:paddingLeft="@dimen/activity_horizontal_margin"
+        android:paddingRight="@dimen/activity_horizontal_margin"
+        android:paddingTop="@dimen/activity_vertical_margin">
+
+        <TextView
+            android:id="@+id/delete_a_fighter_label"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            android:elevation="5dp"
+            android:text="Delete a Fighter"
+            android:textColor="@color/primary_text"
+            android:textStyle="bold" />
+
+        <fr.ganfra.materialspinner.MaterialSpinner
+            android:id="@+id/delete_a_fighter_spinner"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            app:ms_alignLabels="true"
+            app:ms_arrowColor="#0000FF"
+            app:ms_arrowSize="16dp"
+            app:ms_floatingLabelColor="#00FF00"
+            app:ms_floatingLabelText="floating label"
+            app:ms_hint="Saved Fighters"
+            app:ms_multiline="true" />
+
+        <Button
+            android:id="@+id/delete_fighter_button"
+            style="?android:attr/buttonStyleSmall"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/delete_a_fighter_spinner"
+            android:layout_centerHorizontal="true"
+            android:text="Delete" />
+
+    </RelativeLayout>
+
+
+</LinearLayout>
