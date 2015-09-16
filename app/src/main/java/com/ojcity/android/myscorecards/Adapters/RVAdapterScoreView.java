@@ -62,6 +62,7 @@ public class RVAdapterScoreView extends RecyclerView.Adapter<RVAdapterScoreView.
     private int mBackground;
     private Context context;
     private ScoreActivity activity;
+    private boolean[] scoreAdjusted;
 
     // constructor
     public RVAdapterScoreView(ScoreActivity scoreActivity, Context context, Match match) {
@@ -70,6 +71,7 @@ public class RVAdapterScoreView extends RecyclerView.Adapter<RVAdapterScoreView.
         this.context = context;
         mBackground =  mTypedValue.resourceId;
         this.match = match;
+        this.scoreAdjusted = new boolean[match.getNumberOfRounds()];
     }
 
     @Override
@@ -99,6 +101,13 @@ public class RVAdapterScoreView extends RecyclerView.Adapter<RVAdapterScoreView.
             public void onValueChange(NumberPicker picker, int oldVal, int newVal) {
                 match.getFighter1Scores().set(i, newVal);
                 Log.v(TAG, "Round " + Integer.toString(i + 1) + " fighter1Score=" + Integer.toString(newVal));
+
+                // if 10, smart-suggest a 9 on the other picker
+                if(newVal==10 && !scoreAdjusted[i]) {
+                    scoreViewHolder.fighter2Picker.setValue(9);
+                    match.getFighter2Scores().set(i, 9);
+                    scoreAdjusted[i] = true;
+                }
                 activity.updateTotals();
             }
         });
@@ -108,6 +117,13 @@ public class RVAdapterScoreView extends RecyclerView.Adapter<RVAdapterScoreView.
             public void onValueChange(NumberPicker picker, int oldVal, int newVal) {
                 match.getFighter2Scores().set(i, newVal);
                 Log.v(TAG, "Round " + Integer.toString(i + 1) + " fighter2Score=" + Integer.toString(newVal));
+
+                // if 10, smart-suggest a 9 on the other picker
+                if(newVal==10 && !scoreAdjusted[i]) {
+                    scoreViewHolder.fighter1Picker.setValue(9);
+                    match.getFighter1Scores().set(i, 9);
+                    scoreAdjusted[i] = true;
+                }
                 activity.updateTotals();
             }
         });
