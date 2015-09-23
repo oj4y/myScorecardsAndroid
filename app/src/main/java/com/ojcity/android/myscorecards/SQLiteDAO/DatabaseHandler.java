@@ -73,7 +73,6 @@ public class DatabaseHandler {
 
         long matchRowId;
         matchRowId = database.insert(SQLiteHelper.TABLE_MATCHES, null, matchContentValues);
-
         Log.v(TAG, "match inserted at RowId=" + Long.toString(matchRowId));
 
     }
@@ -91,7 +90,6 @@ public class DatabaseHandler {
         sqlQuery += " limit 0,5";
 
         // execute the query
-        boolean isDbOpen = database.isOpen();   // for debug purposes
         Cursor cursor = database.rawQuery(sqlQuery, null);
 
         if(cursor.moveToFirst()) {
@@ -149,8 +147,11 @@ public class DatabaseHandler {
         int numberOfRounds;
 
         // make query
-        String sqlQuery = "select * from " + dbHelper.TABLE_MATCHES;
-        sqlQuery += " where " + dbHelper.COLUMN_ID + " = " + matchId;
+        String sqlQuery = "";
+        sqlQuery += "select * from " + dbHelper.TABLE_MATCHES;
+        sqlQuery += " where " + dbHelper.TABLE_MATCHES + "." + dbHelper.COLUMN_ID;
+        sqlQuery += " = " + matchId + ";";
+        Log.v(TAG, sqlQuery);
 
         Cursor cursor = database.rawQuery(sqlQuery, null);
 
@@ -180,7 +181,7 @@ public class DatabaseHandler {
                 // get scores
                 // score columns start at columns 5 to 34
                 // probably dual counters
-                for (int i = 5, k = 1; i < 34 && k <= numberOfRounds; i += 2, k++) {
+                for (int i = 5, k = 1; i < 35 && k <= numberOfRounds; i += 2, k++) {
                     int fighter1RoundScore = cursor.getInt(i);
                     int fighter2RoundScore = cursor.getInt(i + 1);
                     match.getFighter1Scores().add(fighter1RoundScore);
@@ -230,25 +231,31 @@ public class DatabaseHandler {
         List<Match> matchList = new ArrayList<>();
 
         // make query
-        String sqlQuery = "select matches._id, group_concat(fighters.name) ";
-        sqlQuery += "from matches, fighters ";
-        sqlQuery += "where matches.fighter1 = fighters._id OR matches.fighter2 = fighters._id ";
-        sqlQuery += "group by matches._id";
+//        String sqlQuery = "select matches._id, group_concat(fighters.name) ";
+//        sqlQuery += "from matches, fighters ";
+//        sqlQuery += "where matches.fighter1 = fighters._id OR matches.fighter2 = fighters._id ";
+//        sqlQuery += "group by matches._id";
+
+        // query version 2
+        String sqlQuery2 = "select *, group_concat(fighters.name) ";
+        sqlQuery2 += "from matches, fighters ";
+        sqlQuery2 += "where matches.fighter1 = fighters._id OR matches.fighter2 = fighters._id ";
+        sqlQuery2 += "group by matches._id";
 
         // execute SQL
-        Cursor cursor = database.rawQuery(sqlQuery, null);
+        Cursor cursor = database.rawQuery(sqlQuery2, null);
 
         if(cursor.moveToFirst()) {
             do {
-                // column names _id and group_concat(fighters.name)
+                // column names _id and (last column) group_concat(fighters.name)
                 int matchId = cursor.getInt(0);
-                String bothFighters = cursor.getString(1);
+                int rounds = cursor.getInt(1);
+                long date = cursor.getLong(2);
 
+                String bothFighters = cursor.getString(37);
                 int delimiter = bothFighters.indexOf(',');
-
                 String fighter1Name = bothFighters.substring(0, delimiter);
                 String fighter2Name = bothFighters.substring(delimiter+1, bothFighters.length());
-
                 Log.v(TAG, "fighter1Name=" + fighter1Name);
                 Log.v(TAG, "fighter2Name=" + fighter2Name);
 
@@ -259,6 +266,13 @@ public class DatabaseHandler {
                 // create the match object and setId
                 Match match = new Match(fighter1, fighter2);
                 match.setId(matchId);
+                match.setNumberOfRounds(rounds);
+                match.setDateLong(date);
+                // scores at indices 5 to 34
+                for(int i = 5, k = 1; i < 35 && k <= rounds; i += 2, k++) {
+                    match.getFighter1Scores().add(cursor.getInt(i));
+                    match.getFighter2Scores().add(cursor.getInt(i+1));
+                }
 
                 // add to match list
                 matchList.add(match);
@@ -267,9 +281,7 @@ public class DatabaseHandler {
 
             cursor.close();
         }
-
         return matchList;
-
     }
 
     // update score given (2) ArrayLists of scores

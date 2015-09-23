@@ -99,7 +99,7 @@ public class AddMatchesFragment extends Fragment {
 
                 // get rounds for real this time
                 int numberOfRoundsInt = Integer.parseInt(numberOfRounds);
-                Log.v(TAG, String.valueOf(numberOfRoundsInt));
+                Log.v(TAG, "numberOfRounds=" + String.valueOf(numberOfRoundsInt));
 
                 // create the new fighter object
                 fighter1 = new Fighter(fighter1Name);

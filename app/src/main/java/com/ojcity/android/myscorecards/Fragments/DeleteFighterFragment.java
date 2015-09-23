@@ -61,6 +61,11 @@ public class DeleteFighterFragment extends Fragment {
             public void onClick(View view) {
                 final String nameToDelete = deleteFighterSpinner.getSelectedItem().toString();
 
+                if(nameToDelete.matches("Saved Fighters")) {
+                    deleteFighterSpinner.setError("Select a Fighter");
+                    return;
+                }
+
                 MaterialDialog materialDialog = new MaterialDialog.Builder(getContext())
                         .title("Delete this fighter?")
                         .content("This will not only delete " + nameToDelete + ", but all matches he is involved in." )

@@ -25,7 +25,6 @@ public class ScoreActivity extends AppCompatActivity {
     private RecyclerView rv;
     private DatabaseHandler dataSource;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -52,8 +51,7 @@ public class ScoreActivity extends AppCompatActivity {
             ourMatch = dataSource.readMatch(matchId);
             dataSource.close();
 
-            // moved to global variable
-            rv = (RecyclerView)findViewById(R.id.activity_score_rv);
+            rv = (RecyclerView) findViewById(R.id.activity_score_rv);
 
             // init rv
             rv.setLayoutManager(new LinearLayoutManager(rv.getContext()));
@@ -66,7 +64,7 @@ public class ScoreActivity extends AppCompatActivity {
             mFighter1Total = (TextView) findViewById(R.id.fighter1_total);
             mFighter2Total = (TextView) findViewById(R.id.fighter2_total);
 
-            ab.setTitle( ourMatch.getFighter1().getName() + " vs. "
+            ab.setTitle(ourMatch.getFighter1().getName() + " vs. "
                     + ourMatch.getFighter2().getName());
 
             updateTotals();
@@ -90,16 +88,15 @@ public class ScoreActivity extends AppCompatActivity {
         int fighter1Total = 0;
         int fighter2Total = 0;
 
-        for(int i = 0; i < ourMatch.getNumberOfRounds(); i++) {
-            fighter1Total =  fighter1Total + ourMatch.getFighter1Scores().get(i);
-            fighter2Total =  fighter2Total + ourMatch.getFighter2Scores().get(i);
+        for (int i = 0; i < ourMatch.getNumberOfRounds(); i++) {
+            fighter1Total = fighter1Total + ourMatch.getFighter1Scores().get(i);
+            fighter2Total = fighter2Total + ourMatch.getFighter2Scores().get(i);
         }
 
         mFighter1Total.setText(Integer.toString(fighter1Total));
         mFighter2Total.setText(Integer.toString(fighter2Total));
         Log.v(TAG, "fighter1Total= " + Integer.toString(fighter1Total));
         Log.v(TAG, "fighter2Total= " + Integer.toString(fighter2Total));
-
     }
 
     @Override
