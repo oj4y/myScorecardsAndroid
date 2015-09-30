@@ -67,17 +67,16 @@ public class MainActivity extends AppCompatActivity {
     }
 
    private void startFragment(Fragment fragment, String tag) {
-        // if fragment is already visible, don't re-open it
         if(fragment!= null && fragment.isVisible())
             return;
 
         Log.v(TAG, "startFragment(" + fragment.toString() + ")");
+
         // pass Fragment to FragmentManager and start
         FragmentManager fragmentManager = getSupportFragmentManager();
         FragmentTransaction transaction = fragmentManager.beginTransaction();
         transaction.replace(R.id.content_frame, fragment, tag);
         transaction.commit();
-        return;
     }
 
     @Override
@@ -103,7 +102,6 @@ public class MainActivity extends AppCompatActivity {
                 new NavigationView.OnNavigationItemSelectedListener() {
                     @Override
                     public boolean onNavigationItemSelected(MenuItem menuItem) {
-
                         menuItem.setChecked(true);
 
                         drawerLayout.closeDrawers();
