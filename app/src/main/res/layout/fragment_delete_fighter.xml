@@ -19,9 +19,6 @@
             android:id="@+id/delete_a_fighter_label"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true"
-            android:layout_alignParentTop="true"
             android:elevation="5dp"
             android:text="Delete a Fighter"
             android:textColor="@color/primary_text"
@@ -31,11 +28,10 @@
             android:id="@+id/delete_a_fighter_spinner"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
+            android:layout_below="@+id/delete_a_fighter_label"
             app:ms_alignLabels="true"
             app:ms_arrowColor="#0000FF"
             app:ms_arrowSize="16dp"
-            app:ms_floatingLabelColor="#00FF00"
-            app:ms_floatingLabelText="floating label"
             app:ms_hint="Saved Fighters"
             app:ms_multiline="true" />
 
