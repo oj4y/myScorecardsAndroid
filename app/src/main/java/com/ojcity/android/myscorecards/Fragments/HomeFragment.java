@@ -4,19 +4,19 @@ package com.ojcity.android.myscorecards.Fragments;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.support.v4.app.Fragment;
 
 import com.ojcity.android.myscorecards.Activities.MainActivity;
 import com.ojcity.android.myscorecards.Adapters.RVAdapterMatchView;
-import com.ojcity.android.myscorecards.SQLiteDAO.DatabaseHandler;
 import com.ojcity.android.myscorecards.Model.Match;
 import com.ojcity.android.myscorecards.R;
+import com.ojcity.android.myscorecards.SQLiteDAO.DatabaseHandler;
 
 import java.util.List;
 
@@ -29,10 +29,29 @@ public class HomeFragment extends Fragment {
     private RecyclerView rv;
     private RVAdapterMatchView adapter;
     private List<Match> matchList;
+    private MainActivity mainActivity;
 
     public HomeFragment() {
         // Required empty public constructor
     }
+
+    private View.OnClickListener startFragmentFightersFAB = new View.OnClickListener() {
+        @Override
+        public void onClick(View view) {
+            mainActivity.startFragment(mainActivity.getAddFighterFragment(), "fighters");
+            // TODO
+            // change navigationView item set checked
+            Log.v(TAG, "fab.startFragmentFighters");
+        }
+    };
+
+    private View.OnClickListener startFragmentMatchesFAB = new View.OnClickListener() {
+        @Override
+        public void onClick(View view) {
+            mainActivity.startFragment(mainActivity.getAddMatchesFragment(), "matches");
+            Log.v(TAG, "fab.startFragmentMatches");
+        }
+    };
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -44,27 +63,22 @@ public class HomeFragment extends Fragment {
         // fab here
         // set up fab
         FloatingActionButton fab = (FloatingActionButton) myFragmentView.findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                // TODO
-            }
-        });
-
-        fab.hide();
 
         // check if matchList comes back empty
-        if(matchList.size() == 0) {
+        if (matchList.size() == 0) {
             // Snackbar to say no matches
             Snackbar.make(myFragmentView, "Please add fighters & matches to score!",
                     Snackbar.LENGTH_LONG).setAction("Action", null).show();
-        }
+            fab.setOnClickListener(startFragmentFightersFAB);
+        } else
+            fab.setOnClickListener(startFragmentMatchesFAB);
 
         return myFragmentView;
     }
 
     private void initializeMatchView() {
-        dataSource = new DatabaseHandler( getActivity() );
+        this.mainActivity = (MainActivity) getActivity();
+        dataSource = new DatabaseHandler(getActivity());
         dataSource.open();
         rv = (RecyclerView) myFragmentView.findViewById(R.id.recyclerview);
         rv.setLayoutManager(new LinearLayoutManager(rv.getContext()));

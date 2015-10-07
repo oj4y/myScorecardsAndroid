@@ -2,7 +2,6 @@ package com.ojcity.android.myscorecards.Activities;
 
 import android.os.Bundle;
 import android.support.design.widget.CoordinatorLayout;
-import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
@@ -12,12 +11,10 @@ import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
-
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
 
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.ojcity.android.myscorecards.Fragments.AddFighterFragment;
@@ -25,7 +22,6 @@ import com.ojcity.android.myscorecards.Fragments.AddMatchesFragment;
 import com.ojcity.android.myscorecards.Fragments.DeleteFighterFragment;
 import com.ojcity.android.myscorecards.Fragments.HomeFragment;
 import com.ojcity.android.myscorecards.R;
-import com.ojcity.android.myscorecards.SQLiteDAO.DatabaseHandler;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -36,6 +32,14 @@ public class MainActivity extends AppCompatActivity {
     private AddMatchesFragment addMatchesFragment = new AddMatchesFragment();
     private AddFighterFragment addFighterFragment = new AddFighterFragment();
     private DeleteFighterFragment deleteFighterFragment = new DeleteFighterFragment();
+
+    public AddMatchesFragment getAddMatchesFragment() {
+        return addMatchesFragment;
+    }
+
+    public AddFighterFragment getAddFighterFragment() {
+        return addFighterFragment;
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -66,7 +70,8 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-   private void startFragment(Fragment fragment, String tag) {
+    // public so HomeFragment can access with FAB
+    public void startFragment(Fragment fragment, String tag) {
         if(fragment!= null && fragment.isVisible())
             return;
 

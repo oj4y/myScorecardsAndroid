@@ -2,10 +2,6 @@ package com.ojcity.android.myscorecards.Adapters;
 
 import android.content.Context;
 import android.content.Intent;
-import android.content.res.Resources;
-import android.graphics.Bitmap;
-import android.graphics.Color;
-import android.graphics.drawable.BitmapDrawable;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.util.TypedValue;
@@ -18,13 +14,10 @@ import android.widget.TextView;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.amulyakhare.textdrawable.TextDrawable;
 import com.amulyakhare.textdrawable.util.ColorGenerator;
-import com.ojcity.android.myscorecards.Model.Fighter;
-import com.ojcity.android.myscorecards.SQLiteDAO.DatabaseHandler;
+import com.ojcity.android.myscorecards.Activities.ScoreActivity;
 import com.ojcity.android.myscorecards.Model.Match;
 import com.ojcity.android.myscorecards.R;
-import com.ojcity.android.myscorecards.Activities.ScoreActivity;
-
-import org.w3c.dom.Text;
+import com.ojcity.android.myscorecards.SQLiteDAO.DatabaseHandler;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -37,47 +30,19 @@ import java.util.Locale;
 public class RVAdapterMatchView extends RecyclerView.Adapter<RVAdapterMatchView.MatchViewHolder> {
 
     private static final String TAG = "RVAdapterMatchView";
-
-    public static class MatchViewHolder extends RecyclerView.ViewHolder {
-
-        View mView;
-        TextView fighter1Name;
-        TextView fighter2Name;
-        TextView date;
-        ImageView image1;
-        ImageView image2;
-        TextView fighter1Score;
-        TextView fighter2Score;
-
-            // constructor
-        MatchViewHolder(View itemView) {
-            super(itemView);
-            mView = itemView;
-            fighter1Name = (TextView)itemView.findViewById(R.id.fighter1_name);
-            fighter2Name = (TextView)itemView.findViewById(R.id.fighter2_name);
-            date = (TextView)itemView.findViewById(R.id.date);
-            image1 = (ImageView) itemView.findViewById(R.id.fighter1_tile);
-            image2 = (ImageView) itemView.findViewById(R.id.fighter2_tile);
-            fighter1Score = (TextView)itemView.findViewById(R.id.fighter1_score);
-            fighter2Score = (TextView)itemView.findViewById(R.id.fighter2_score);
-        }
-
-    }
-
+    private final TypedValue mTypedValue = new TypedValue();
     private Context context;
     private List<Match> matches;
-    private final TypedValue mTypedValue = new TypedValue();
     private int mBackground;
     private DatabaseHandler dataSource;
     private TextDrawable.IBuilder builder = TextDrawable.builder().round();
     private ColorGenerator generator = ColorGenerator.MATERIAL;
     private int fighter1TileColor;
     private int fighter2TileColor;
-
     // constructor
     public RVAdapterMatchView(Context context, List<Match> matches) {
         context.getTheme().resolveAttribute(R.attr.selectableItemBackground, mTypedValue, true);
-        mBackground =  mTypedValue.resourceId;
+        mBackground = mTypedValue.resourceId;
         this.matches = matches;
     }
 
@@ -91,7 +56,6 @@ public class RVAdapterMatchView extends RecyclerView.Adapter<RVAdapterMatchView.
         View v = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.matchview_item, viewGroup, false);
         return new MatchViewHolder(v);
     }
-
 
     @Override
     public void onBindViewHolder(final MatchViewHolder matchViewHolder, final int i) {
@@ -133,7 +97,7 @@ public class RVAdapterMatchView extends RecyclerView.Adapter<RVAdapterMatchView.
 
                 MaterialDialog materialDialog = new MaterialDialog.Builder(context)
                         .title("Delete this match?")
-                        .content(fighter1Name + " vs. " + fighter2Name )
+                        .content(fighter1Name + " vs. " + fighter2Name)
                         .positiveText("Ok")
                         .negativeText("Cancel")
                         .callback(new MaterialDialog.ButtonCallback() {
@@ -192,5 +156,31 @@ public class RVAdapterMatchView extends RecyclerView.Adapter<RVAdapterMatchView.
     @Override
     public int getItemCount() {
         return matches.size();
+    }
+
+    public static class MatchViewHolder extends RecyclerView.ViewHolder {
+
+        View mView;
+        TextView fighter1Name;
+        TextView fighter2Name;
+        TextView date;
+        ImageView image1;
+        ImageView image2;
+        TextView fighter1Score;
+        TextView fighter2Score;
+
+        // constructor
+        MatchViewHolder(View itemView) {
+            super(itemView);
+            mView = itemView;
+            fighter1Name = (TextView) itemView.findViewById(R.id.fighter1_name);
+            fighter2Name = (TextView) itemView.findViewById(R.id.fighter2_name);
+            date = (TextView) itemView.findViewById(R.id.date);
+            image1 = (ImageView) itemView.findViewById(R.id.fighter1_tile);
+            image2 = (ImageView) itemView.findViewById(R.id.fighter2_tile);
+            fighter1Score = (TextView) itemView.findViewById(R.id.fighter1_score);
+            fighter2Score = (TextView) itemView.findViewById(R.id.fighter2_score);
+        }
+
     }
 }
