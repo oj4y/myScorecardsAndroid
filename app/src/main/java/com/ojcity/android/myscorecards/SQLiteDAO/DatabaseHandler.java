@@ -240,7 +240,8 @@ public class DatabaseHandler {
         String sqlQuery2 = "select *, group_concat(fighters.name) ";
         sqlQuery2 += "from matches, fighters ";
         sqlQuery2 += "where matches.fighter1 = fighters._id OR matches.fighter2 = fighters._id ";
-        sqlQuery2 += "group by matches._id";
+        sqlQuery2 += "group by matches._id ";
+        sqlQuery2 += "order by dateScored DESC";
 
         // execute SQL
         Cursor cursor = database.rawQuery(sqlQuery2, null);
