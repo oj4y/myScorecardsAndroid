@@ -39,8 +39,8 @@ public class HomeFragment extends Fragment {
         @Override
         public void onClick(View view) {
             mainActivity.startFragment(mainActivity.getAddFighterFragment(), "fighters");
-            // TODO
-            // change navigationView item set checked
+
+            mainActivity.getNavigationView().setCheckedItem(R.id.nav_add_fighters);
             Log.v(TAG, "fab.startFragmentFighters");
         }
     };
@@ -49,6 +49,8 @@ public class HomeFragment extends Fragment {
         @Override
         public void onClick(View view) {
             mainActivity.startFragment(mainActivity.getAddMatchesFragment(), "matches");
+
+            mainActivity.getNavigationView().setCheckedItem(R.id.nav_matches);
             Log.v(TAG, "fab.startFragmentMatches");
         }
     };

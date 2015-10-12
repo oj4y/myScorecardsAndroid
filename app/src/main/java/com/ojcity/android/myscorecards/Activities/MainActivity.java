@@ -27,11 +27,16 @@ public class MainActivity extends AppCompatActivity {
 
     private static final String TAG = "MainActivity";
     private DrawerLayout drawerLayout;
+    private NavigationView navigationView;
 
     private HomeFragment homeFragment = new HomeFragment();
     private AddMatchesFragment addMatchesFragment = new AddMatchesFragment();
     private AddFighterFragment addFighterFragment = new AddFighterFragment();
     private DeleteFighterFragment deleteFighterFragment = new DeleteFighterFragment();
+
+    public NavigationView getNavigationView() {
+        return navigationView;
+    }
 
     public AddMatchesFragment getAddMatchesFragment() {
         return addMatchesFragment;
@@ -59,7 +64,7 @@ public class MainActivity extends AppCompatActivity {
         drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
 
         // set up navigation drawer
-        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+        navigationView = (NavigationView) findViewById(R.id.nav_view);
         if (navigationView != null) {
             setupDrawerContent(navigationView);
         }
