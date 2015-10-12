@@ -77,7 +77,7 @@ public class MainActivity extends AppCompatActivity {
 
     // public so HomeFragment can access with FAB
     public void startFragment(Fragment fragment, String tag) {
-        if(fragment!= null && fragment.isVisible())
+        if (fragment != null && fragment.isVisible())
             return;
 
         Log.v(TAG, "startFragment(" + fragment.toString() + ")");
@@ -108,39 +108,44 @@ public class MainActivity extends AppCompatActivity {
 
     private void setupDrawerContent(NavigationView navigationView) {
         navigationView.setCheckedItem(R.id.nav_home);
-        navigationView.setNavigationItemSelectedListener(
-                new NavigationView.OnNavigationItemSelectedListener() {
-                    @Override
-                    public boolean onNavigationItemSelected(MenuItem menuItem) {
-                        menuItem.setChecked(true);
+        navigationView.setNavigationItemSelectedListener(menuListener);
+    }
 
-                        drawerLayout.closeDrawers();
+    private NavigationView.OnNavigationItemSelectedListener menuListener =
+            new NavigationView.OnNavigationItemSelectedListener() {
+                @Override
+                public boolean onNavigationItemSelected(MenuItem menuItem) {
+                    menuItem.setChecked(true);
 
-                        switch (menuItem.getItemId()) {
-                            case R.id.nav_home:
-                                startFragment(homeFragment, "home");
-                                break;
-                            case R.id.nav_matches:
-                                startFragment(addMatchesFragment, "matches");
-                                break;
-                            case R.id.nav_add_fighters:
-                                startFragment(addFighterFragment, "boxers");
-                                break;
-                            case R.id.nav_delete_fighters:
-                                startFragment(deleteFighterFragment, "deleteFighters");
-                                break;
-                            case R.id.about_dialog:
-                                displayAboutDialog();
-                                break;
-                            default:
-                                Snackbar.make(drawerLayout, "Invalid choice", Snackbar.LENGTH_LONG)
-                                        .setAction("Action", null).show();
-                                break;
-                        }
-                        return true;
-                    }
+                    drawerLayout.closeDrawers();
+
+                    setupMenu(menuItem);
+                    return true;
                 }
-        );
+            };
+
+    private void setupMenu(MenuItem menuItem) {
+        switch (menuItem.getItemId()) {
+            case R.id.nav_home:
+                startFragment(homeFragment, "home");
+                break;
+            case R.id.nav_matches:
+                startFragment(addMatchesFragment, "matches");
+                break;
+            case R.id.nav_add_fighters:
+                startFragment(addFighterFragment, "boxers");
+                break;
+            case R.id.nav_delete_fighters:
+                startFragment(deleteFighterFragment, "deleteFighters");
+                break;
+            case R.id.about_dialog:
+                displayAboutDialog();
+                break;
+            default:
+                Snackbar.make(drawerLayout, "Invalid choice", Snackbar.LENGTH_LONG)
+                        .setAction("Action", null).show();
+                break;
+        }
     }
 
     // set back button to close drawer if its open, instead of closing the app
