@@ -1,6 +1,7 @@
 package com.ojcity.android.myscorecards.Activities;
 
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
@@ -9,8 +10,11 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.NumberPicker;
 import android.widget.TextView;
 
+import com.afollestad.materialdialogs.MaterialDialog;
 import com.ojcity.android.myscorecards.Adapters.RVAdapterScoreView;
 import com.ojcity.android.myscorecards.Model.Match;
 import com.ojcity.android.myscorecards.R;
@@ -24,6 +28,15 @@ public class ScoreActivity extends AppCompatActivity {
     private TextView mFighter2Total;
     private RecyclerView rv;
     private DatabaseHandler dataSource;
+    private NumberPicker numberPicker;
+
+    private View.OnClickListener fabDialog = new View.OnClickListener() {
+        @Override
+        public void onClick(View view) {
+            displayPickerDialog();
+            Log.v(TAG, "fab. fabDialog");
+        }
+    };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -68,6 +81,10 @@ public class ScoreActivity extends AppCompatActivity {
                     + ourMatch.getFighter2().getName());
 
             updateTotals();
+
+            FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+            fab.setOnClickListener(fabDialog);
+            fab.hide();
 
         }
     }
@@ -120,4 +137,21 @@ public class ScoreActivity extends AppCompatActivity {
 
         return super.onOptionsItemSelected(item);
     }
+
+    private void displayPickerDialog() {
+
+        MaterialDialog materialDialog = new MaterialDialog.Builder(this)
+                .title("Edit Score")
+                .customView(R.layout.scorepicker, false)
+                .show();
+
+//        numberPicker = (NumberPicker) findViewById(R.id.score_picker);
+        numberPicker = (NumberPicker) materialDialog.getCustomView().findViewById(R.id.fighter1_picker);
+
+        numberPicker.setMaxValue(6);
+        numberPicker.setMaxValue(10);
+        numberPicker.setWrapSelectorWheel(false);
+
+    }
+
 }

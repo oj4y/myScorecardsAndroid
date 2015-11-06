@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:card_view="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="?android:selectableItemBackground"
@@ -8,7 +9,11 @@
     <android.support.v7.widget.CardView
         android:id="@+id/cv"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        card_view:cardCornerRadius="2dp"
+        card_view:cardElevation="2dp"
+        card_view:cardPreventCornerOverlap="false"
+        card_view:cardUseCompatPadding="true">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -17,50 +22,108 @@
 
             <android.support.v7.widget.Toolbar
                 android:id="@+id/round_toolbar"
-                android:title="Round"
                 android:layout_width="match_parent"
-                android:layout_height="50dp" />
+                android:layout_height="50dp"
+                android:title="Round" />
 
             <View
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
                 android:background="@android:color/darker_gray" />
 
-            <RelativeLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal">
+            <!--<RelativeLayout-->
+                <!--android:layout_width="wrap_content"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:layout_gravity="center_horizontal">-->
 
                 <LinearLayout
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal">
+                    android:orientation="vertical">
 
-                    <NumberPicker
-                        android:id="@+id/fighter1_score"
+                    <RadioGroup
+                        android:id="@+id/radio_group"
+                        android:gravity="center_horizontal"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+
+                        <RadioButton
+                            android:id="@+id/fighter1_radio"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Fighter 1" />
+
+                        <RadioButton
+                            android:id="@+id/tie_radio"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Tie" />
+
+                        <RadioButton
+                            android:id="@+id/fighter2_radio"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Fighter 2" />
+
+                    </RadioGroup>
+
+                    <!-- number pickers -->
+
+                    <LinearLayout
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:inputType="number" />
+                        android:layout_gravity="center_horizontal"
+                        android:orientation="horizontal">
 
+                        <TextView
+                            android:id="@+id/fighter1_score"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_vertical"
+                            android:layout_margin="8dp"
+                            android:gravity="center"
+                            android:hint="10"
+                            android:maxLength="2"
+                            android:textSize="32sp" />
 
-                    <TextView
-                        android:id="@+id/dash"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_margin="8dp"
-                        android:layout_gravity="center_vertical|center_horizontal"
-                        android:text="-"
-                        android:textSize="32sp" />
+                        <!--<NumberPicker-->
+                            <!--android:id="@+id/fighter1_score"-->
+                            <!--android:layout_width="wrap_content"-->
+                            <!--android:layout_height="wrap_content"-->
+                            <!--android:inputType="number" />-->
 
-                    <NumberPicker
-                        android:id="@+id/fighter2_score"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:inputType="number" />
+                        <TextView
+                            android:id="@+id/dash"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_vertical|center_horizontal"
+                            android:layout_margin="8dp"
+                            android:text="-"
+                            android:textSize="32sp" />
+
+                        <TextView
+                            android:id="@+id/fighter2_score"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:gravity="center"
+                            android:layout_gravity="center_vertical"
+                            android:layout_margin="8dp"
+                            android:hint="9"
+                            android:maxLength="2"
+                            android:textSize="32sp" />
+
+                        <!--<NumberPicker-->
+                            <!--android:id="@+id/fighter2_score"-->
+                            <!--android:layout_width="wrap_content"-->
+                            <!--android:layout_height="wrap_content"-->
+                            <!--android:inputType="number" />-->
+
+                    </LinearLayout>
 
                 </LinearLayout>
 
-            </RelativeLayout>
+            <!--</RelativeLayout>-->
 
         </LinearLayout>
 
