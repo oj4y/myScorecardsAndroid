@@ -26,82 +26,20 @@ import com.ojcity.android.myscorecards.Activities.ScoreActivity;
 public class RVAdapterScoreView extends RecyclerView.Adapter<RVAdapterScoreView.ScoreViewHolder> {
 
     private static final String TAG = "RVAdapterScoreView";
-
-    private Match match;
-
-    public static class ScoreViewHolder extends RecyclerView.ViewHolder {
-
-        View mView;
-        Toolbar roundToolbar;
-//        NumberPicker fighter1Picker;
-//        NumberPicker fighter2Picker;
-        TextView fighter1TextView;
-        TextView fighter2TextView;
-        TextView fighter1RoundScoreTextView;
-        TextView fighter2RoundScoreTextView;
-
-        RadioGroup radioGroup;
-        RadioButton fighter1Radio;
-        RadioButton fighter2Radio;
-
-        ScoreViewHolder(View itemView) {
-            super(itemView);
-            mView = itemView;
-            roundToolbar = (Toolbar)itemView.findViewById(R.id.round_toolbar);
-            roundToolbar.inflateMenu(R.menu.menu_score_card);
-//            fighter1Picker = (NumberPicker)itemView.findViewById(R.id.fighter1_score);
-//            fighter2Picker = (NumberPicker)itemView.findViewById(R.id.fighter2_score);
-            fighter1TextView = (TextView)itemView.findViewById(R.id.fighter1_score_tv);
-            fighter2TextView = (TextView)itemView.findViewById(R.id.fighter2_score_tv);
-
-            fighter1RoundScoreTextView = (TextView)itemView.findViewById(R.id.fighter1_score);
-            fighter2RoundScoreTextView = (TextView)itemView.findViewById(R.id.fighter2_score);
-
-            radioGroup = (RadioGroup)itemView.findViewById(R.id.radio_group);
-            fighter1Radio = (RadioButton)itemView.findViewById(R.id.fighter1_radio);
-            fighter2Radio = (RadioButton)itemView.findViewById(R.id.fighter2_radio);
-
-//            String[] fighterPickerValues = {Integer.toString(0),
-//                    Integer.toString(6),
-//                    Integer.toString(7),
-//                    Integer.toString(8),
-//                    Integer.toString(9),
-//                    Integer.toString(10)
-//            };
-
-//            fighter1Picker.setMaxValue(10);
-//            fighter1Picker.setMinValue(6);
-//            fighter1Picker.setWrapSelectorWheel(false);
-
-//            fighter1Picker.setDisplayedValues(fighterPickerValues);
-
-//            fighter2Picker.setMaxValue(10);
-//            fighter2Picker.setMinValue(6);
-//            fighter2Picker.setWrapSelectorWheel(false);
-
-            // TODO
-            // hide this shit for now
-//            fighter1Picker.setVisibility(View.GONE);
-//            fighter2Picker.setVisibility(View.GONE);
-
-        }
-    }
-
     private final TypedValue mTypedValue = new TypedValue();
+    private Match match;
     private int mBackground;
     private Context context;
     private ScoreActivity activity;
     private boolean[] scoreAdjusted;
-
     private NumberPicker fighter1Picker;
     private NumberPicker fighter2Picker;
-
     // constructor
     public RVAdapterScoreView(ScoreActivity scoreActivity, Context context, Match match) {
         this.activity = scoreActivity;
         context.getTheme().resolveAttribute(R.attr.selectableItemBackground, mTypedValue, true);
         this.context = context;
-        mBackground =  mTypedValue.resourceId;
+        mBackground = mTypedValue.resourceId;
         this.match = match;
         this.scoreAdjusted = new boolean[match.getNumberOfRounds()];
     }
@@ -128,53 +66,13 @@ public class RVAdapterScoreView extends RecyclerView.Adapter<RVAdapterScoreView.
 
         scoreViewHolder.roundToolbar.setTitle("Round " + roundToolbar);
 
-
-//        scoreViewHolder.roundToolbar.
-
-//        scoreViewHolder.fighter1Picker.setValue(match.getFighter1Scores().get(i));
-//        scoreViewHolder.fighter2Picker.setValue(match.getFighter2Scores().get(i));
-//
-//        scoreViewHolder.fighter1Picker.setOnValueChangedListener(new NumberPicker.OnValueChangeListener() {
-//            @Override
-//            public void onValueChange(NumberPicker picker, int oldVal, int newVal) {
-//                match.getFighter1Scores().set(i, newVal);
-//                Log.v(TAG, "Round " + Integer.toString(i + 1) + " fighter1Score=" + Integer.toString(newVal));
-//
-//                // if 10, smart-suggest a 9 on the other picker
-//                if (newVal == 10 && !scoreAdjusted[i]) {
-//                    scoreViewHolder.fighter2Picker.setValue(9);
-//                    match.getFighter2Scores().set(i, 9);
-//                    scoreAdjusted[i] = true;
-//                }
-//                activity.updateTotals();
-//            }
-//        });
-//
-//        scoreViewHolder.fighter2Picker.setOnValueChangedListener(new NumberPicker.OnValueChangeListener() {
-//            @Override
-//            public void onValueChange(NumberPicker picker, int oldVal, int newVal) {
-//                match.getFighter2Scores().set(i, newVal);
-//                Log.v(TAG, "Round " + Integer.toString(i + 1) + " fighter2Score=" + Integer.toString(newVal));
-//
-//                // if 10, smart-suggest a 9 on the other picker
-//                if(newVal==10 && !scoreAdjusted[i]) {
-//                    scoreViewHolder.fighter1Picker.setValue(9);
-//                    match.getFighter1Scores().set(i, 9);
-//                    scoreAdjusted[i] = true;
-//                }
-//                activity.updateTotals();
-//            }
-//        });
-
         scoreViewHolder.fighter1Radio.setText(match.getFighter1().getName());
         scoreViewHolder.fighter2Radio.setText(match.getFighter2().getName());
 
         scoreViewHolder.fighter1RoundScoreTextView.setText(match.getFighter1Scores().get(i).toString());
         scoreViewHolder.fighter2RoundScoreTextView.setText(match.getFighter2Scores().get(i).toString());
 
-
         setRadioButtons(scoreViewHolder, i);
-
 
         scoreViewHolder.fighter1Radio.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -201,7 +99,7 @@ public class RVAdapterScoreView extends RecyclerView.Adapter<RVAdapterScoreView.
         scoreViewHolder.roundToolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
             @Override
             public boolean onMenuItemClick(MenuItem item) {
-                switch(item.getItemId()) {
+                switch (item.getItemId()) {
                     case R.id.action_edit_score:
                         displayEditScore(i, scoreViewHolder);
                         break;
@@ -253,11 +151,11 @@ public class RVAdapterScoreView extends RecyclerView.Adapter<RVAdapterScoreView.
 
     private void setRadioButtons(ScoreViewHolder scoreViewHolder, int i) {
         // set radio buttons to score
-        if(match.getFighter1Scores().get(i) > match.getFighter2Scores().get(i))
+        if (match.getFighter1Scores().get(i) > match.getFighter2Scores().get(i))
             scoreViewHolder.radioGroup.check(R.id.fighter1_radio);
-        else if(match.getFighter1Scores().get(i) < match.getFighter2Scores().get(i))
+        else if (match.getFighter1Scores().get(i) < match.getFighter2Scores().get(i))
             scoreViewHolder.radioGroup.check(R.id.fighter2_radio);
-        else if(match.getFighter1Scores().get(i) == match.getFighter2Scores().get(i)
+        else if (match.getFighter1Scores().get(i) == match.getFighter2Scores().get(i)
                 && match.getFighter1Scores().get(i) == 0
                 && match.getFighter2Scores().get(i) == 0)
             scoreViewHolder.radioGroup.clearCheck();
@@ -266,9 +164,38 @@ public class RVAdapterScoreView extends RecyclerView.Adapter<RVAdapterScoreView.
         }
     }
 
-
     @Override
     public int getItemCount() {
         return match.getNumberOfRounds();
+    }
+
+    public static class ScoreViewHolder extends RecyclerView.ViewHolder {
+
+        View mView;
+        Toolbar roundToolbar;
+        TextView fighter1TextView;
+        TextView fighter2TextView;
+        TextView fighter1RoundScoreTextView;
+        TextView fighter2RoundScoreTextView;
+        RadioGroup radioGroup;
+        RadioButton fighter1Radio;
+        RadioButton fighter2Radio;
+
+        ScoreViewHolder(View itemView) {
+            super(itemView);
+            mView = itemView;
+            roundToolbar = (Toolbar) itemView.findViewById(R.id.round_toolbar);
+            roundToolbar.inflateMenu(R.menu.menu_score_card);
+            fighter1TextView = (TextView) itemView.findViewById(R.id.fighter1_score_tv);
+            fighter2TextView = (TextView) itemView.findViewById(R.id.fighter2_score_tv);
+
+            fighter1RoundScoreTextView = (TextView) itemView.findViewById(R.id.fighter1_score);
+            fighter2RoundScoreTextView = (TextView) itemView.findViewById(R.id.fighter2_score);
+
+            radioGroup = (RadioGroup) itemView.findViewById(R.id.radio_group);
+            fighter1Radio = (RadioButton) itemView.findViewById(R.id.fighter1_radio);
+            fighter2Radio = (RadioButton) itemView.findViewById(R.id.fighter2_radio);
+
+        }
     }
 }

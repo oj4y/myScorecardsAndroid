@@ -14,11 +14,11 @@
             android:layout_height="wrap_content"
             android:orientation="horizontal">
 
-        <NumberPicker
-            android:id="@+id/fighter1_picker"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:inputType="number" />
+            <NumberPicker
+                android:id="@+id/fighter1_picker"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:inputType="number" />
 
             <TextView
                 android:id="@+id/dash"
@@ -29,20 +29,14 @@
                 android:text="-"
                 android:textSize="32sp" />
 
-        <NumberPicker
-            android:id="@+id/fighter2_picker"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:inputType="number" />
+            <NumberPicker
+                android:id="@+id/fighter2_picker"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:inputType="number" />
 
         </LinearLayout>
 
-        <!--<com.ojcity.android.myscorecards.Class.MyNumberPicker-->
-            <!--android:id="@+id/score_picker"-->
-            <!--android:layout_width="wrap_content"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--max="10"-->
-            <!--min="6" />-->
 
     </RelativeLayout>
 
