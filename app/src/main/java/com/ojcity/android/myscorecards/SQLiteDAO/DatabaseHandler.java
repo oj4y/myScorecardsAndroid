@@ -253,10 +253,23 @@ public class DatabaseHandler {
                 int rounds = cursor.getInt(1);
                 long date = cursor.getLong(2);
 
+                int fighter1Id = cursor.getInt(3);
+                int fighter2Id = cursor.getInt(4);
+
                 String bothFighters = cursor.getString(37);
                 int delimiter = bothFighters.indexOf(',');
-                String fighter1Name = bothFighters.substring(0, delimiter);
-                String fighter2Name = bothFighters.substring(delimiter+1, bothFighters.length());
+
+                String fighter1Name;
+                String fighter2Name;
+
+                if (fighter1Id < fighter2Id) {
+                    fighter1Name = bothFighters.substring(0, delimiter);
+                    fighter2Name = bothFighters.substring(delimiter + 1, bothFighters.length());
+                } else { // fighter1Id > fighter2Id
+                    fighter2Name = bothFighters.substring(0, delimiter);
+                    fighter1Name = bothFighters.substring(delimiter + 1, bothFighters.length());
+                }
+
                 Log.v(TAG, "fighter1Name=" + fighter1Name);
                 Log.v(TAG, "fighter2Name=" + fighter2Name);
 
