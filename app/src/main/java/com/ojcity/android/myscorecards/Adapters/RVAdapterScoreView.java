@@ -96,6 +96,27 @@ public class RVAdapterScoreView extends RecyclerView.Adapter<RVAdapterScoreView.
             }
         });
 
+        scoreViewHolder.tieRadio.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                match.getFighter1Scores().set(i, 9);
+                match.getFighter2Scores().set(i, 9);
+                scoreViewHolder.fighter1RoundScoreTextView.setText(match.getFighter1Scores().get(i).toString());
+                scoreViewHolder.fighter2RoundScoreTextView.setText(match.getFighter2Scores().get(i).toString());
+                activity.updateTotals();
+            }
+        });
+
+        scoreViewHolder.tieRadio.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View view) {
+                match.getFighter1Scores().set(i, 9);
+                match.getFighter2Scores().set(i, 9);
+                displayEditScore(i, scoreViewHolder);
+                return true;
+            }
+        });
+
         scoreViewHolder.roundToolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
             @Override
             public boolean onMenuItemClick(MenuItem item) {
@@ -180,6 +201,7 @@ public class RVAdapterScoreView extends RecyclerView.Adapter<RVAdapterScoreView.
         RadioGroup radioGroup;
         RadioButton fighter1Radio;
         RadioButton fighter2Radio;
+        RadioButton tieRadio;
 
         ScoreViewHolder(View itemView) {
             super(itemView);
@@ -195,6 +217,7 @@ public class RVAdapterScoreView extends RecyclerView.Adapter<RVAdapterScoreView.
             radioGroup = (RadioGroup) itemView.findViewById(R.id.radio_group);
             fighter1Radio = (RadioButton) itemView.findViewById(R.id.fighter1_radio);
             fighter2Radio = (RadioButton) itemView.findViewById(R.id.fighter2_radio);
+            tieRadio = (RadioButton) itemView.findViewById(R.id.tie_radio);
 
         }
     }
