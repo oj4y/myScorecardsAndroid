@@ -159,7 +159,7 @@ public class RVAdapterScoreView extends RecyclerView.Adapter<RVAdapterScoreView.
 
     private void markKO(final int round, final ScoreViewHolder scoreViewHolder) {
         // mark the remaining rounds 0-0
-        for (int i = round; i < getItemCount(); i++) {
+        for (int i = round + 1; i < getItemCount(); i++) {
             match.getFighter1Scores().set(i, 0);
             match.getFighter2Scores().set(i, 0);
             scoreViewHolder.fighter1RoundScoreTextView.setText(match.getFighter1Scores().get(i).toString());
