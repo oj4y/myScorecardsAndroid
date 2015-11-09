@@ -89,6 +89,11 @@ public class ScoreActivity extends AppCompatActivity {
         }
     }
 
+    // used in RVAdapterScoreView
+    public void refreshScoreView() {
+        rv.getAdapter().notifyDataSetChanged();
+    }
+
     @Override
     public void onPause() {
         rv.getAdapter().notifyDataSetChanged();

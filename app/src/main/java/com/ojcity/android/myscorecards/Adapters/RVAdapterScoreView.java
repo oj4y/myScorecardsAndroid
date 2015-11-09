@@ -145,7 +145,8 @@ public class RVAdapterScoreView extends RecyclerView.Adapter<RVAdapterScoreView.
                         displayEditScore(i, scoreViewHolder);
                         break;
                     case R.id.action_mark_stoppage:
-                        //
+                        // TODO
+                        markKO(i, scoreViewHolder);
                         break;
                     default:
                         return true;
@@ -154,6 +155,19 @@ public class RVAdapterScoreView extends RecyclerView.Adapter<RVAdapterScoreView.
             }
         });
 
+    }
+
+    private void markKO(final int round, final ScoreViewHolder scoreViewHolder) {
+        // mark the remaining rounds 0-0
+        for (int i = round; i < getItemCount(); i++) {
+            match.getFighter1Scores().set(i, 0);
+            match.getFighter2Scores().set(i, 0);
+            scoreViewHolder.fighter1RoundScoreTextView.setText(match.getFighter1Scores().get(i).toString());
+            scoreViewHolder.fighter2RoundScoreTextView.setText(match.getFighter2Scores().get(i).toString());
+            scoreViewHolder.radioGroup.clearCheck();
+        }
+        activity.updateTotals();
+        activity.refreshScoreView();
     }
 
     private void displayEditScore(final int i, final ScoreViewHolder scoreViewHolder) {
