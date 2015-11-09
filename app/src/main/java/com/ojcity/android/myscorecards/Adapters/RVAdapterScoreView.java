@@ -107,6 +107,26 @@ public class RVAdapterScoreView extends RecyclerView.Adapter<RVAdapterScoreView.
             }
         });
 
+        scoreViewHolder.fighter1Radio.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                match.getFighter1Scores().set(i, 10);
+                match.getFighter2Scores().set(i, 9);
+                displayEditScore(i, scoreViewHolder);
+                return true;
+            }
+        });
+
+        scoreViewHolder.fighter2Radio.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                match.getFighter2Scores().set(i, 10);
+                match.getFighter1Scores().set(i, 9);
+                displayEditScore(i, scoreViewHolder);
+                return true;
+            }
+        });
+
         scoreViewHolder.tieRadio.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View view) {
