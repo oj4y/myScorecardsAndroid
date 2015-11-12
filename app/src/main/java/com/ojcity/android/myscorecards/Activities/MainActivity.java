@@ -16,6 +16,7 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.ojcity.android.myscorecards.Fragments.AddFighterFragment;
 import com.ojcity.android.myscorecards.Fragments.AddMatchesFragment;
@@ -140,6 +141,7 @@ public class MainActivity extends AppCompatActivity {
                 break;
             case R.id.about_dialog:
                 displayAboutDialog();
+                navigationView.setCheckedItem(R.id.nav_home);
                 break;
             default:
                 Snackbar.make(drawerLayout, "Invalid choice", Snackbar.LENGTH_LONG)
