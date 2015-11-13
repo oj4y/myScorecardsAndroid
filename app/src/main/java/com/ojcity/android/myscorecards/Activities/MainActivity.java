@@ -141,7 +141,7 @@ public class MainActivity extends AppCompatActivity {
                 break;
             case R.id.about_dialog:
                 displayAboutDialog();
-                navigationView.setCheckedItem(R.id.nav_home);
+                menuItem.setCheckable(false);
                 break;
             default:
                 Snackbar.make(drawerLayout, "Invalid choice", Snackbar.LENGTH_LONG)
