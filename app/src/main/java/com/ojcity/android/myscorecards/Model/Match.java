@@ -17,6 +17,9 @@ public class Match {
     private Integer numberOfRounds;
     private ArrayList<Integer> fighter1Scores;
     private ArrayList<Integer> fighter2Scores;
+    private boolean earlyStoppage;
+    private Integer roundStoppage;
+    private Integer winnerFighterId;
 
     public Match() {
         this.id = 0;
@@ -27,6 +30,9 @@ public class Match {
         this.numberOfRounds = 0;
         this.fighter1Scores = new ArrayList<>();
         this.fighter2Scores = new ArrayList<>();
+        this.earlyStoppage = false;
+        this.roundStoppage = null;
+        this.winnerFighterId = null;
     }
 
     public Match( Fighter fighter1, Fighter fighter2 ) {
@@ -37,6 +43,9 @@ public class Match {
         this.numberOfRounds = null;
         this.fighter1Scores = new ArrayList<>();
         this.fighter2Scores = new ArrayList<>();
+        this.earlyStoppage = false;
+        this.roundStoppage = null;
+        this.winnerFighterId = null;
     }
 
     public Fighter getFighter1() {
@@ -92,5 +101,28 @@ public class Match {
         return id;
     }
 
+    public boolean isEarlyStoppage() {
+        return earlyStoppage;
+    }
+
+    public void setEarlyStoppage(boolean earlyStoppage) {
+        this.earlyStoppage = earlyStoppage;
+    }
+
+    public Integer getRoundStoppage() {
+        return roundStoppage;
+    }
+
+    public void setRoundStoppage(int roundStoppage) {
+        this.roundStoppage = roundStoppage;
+    }
+
+    public Integer getWinnerFighterId() {
+        return winnerFighterId;
+    }
+
+    public void setWinnerFighterId(int winnerFighterId) {
+        this.winnerFighterId = winnerFighterId;
+    }
 
 }

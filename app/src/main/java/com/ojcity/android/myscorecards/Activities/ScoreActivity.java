@@ -100,6 +100,7 @@ public class ScoreActivity extends AppCompatActivity {
         updateTotals();
         dataSource.open();
         dataSource.updateScore(ourMatch);
+        dataSource.updateStoppage(ourMatch);
         dataSource.close();
 
         super.onPause();

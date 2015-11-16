@@ -26,6 +26,9 @@ public class SQLiteHelper extends SQLiteOpenHelper {
     public static final String COLUMN_CREATED = "dateScored";
     public static final String COLUMN_FIGHTER1 = "fighter1";
     public static final String COLUMN_FIGHTER2 = "fighter2";
+    public static final String COLUMN_STOPPED = "earlyStoppage";
+    public static final String COLUMN_ROUNDSTOPPAGE = "roundStoppage";
+    public static final String COLUMN_WINNING_FIGHTER = "winningFighter";
 
     // scores table
     public static final String TABLE_SCORES = "scorecard";
@@ -51,10 +54,16 @@ public class SQLiteHelper extends SQLiteOpenHelper {
                     + COLUMN_CREATED + " int not null, "
                     + COLUMN_FIGHTER1 + " integer, "
                     + COLUMN_FIGHTER2 + " integer, "
+                    + COLUMN_STOPPED + " integer, "
+                    + COLUMN_ROUNDSTOPPAGE + " integer, "
+                    + COLUMN_WINNING_FIGHTER + " integer, "
                     + "foreign key(" + COLUMN_FIGHTER1 + ")" + " references " + TABLE_FIGHTERS
                     + "(" + COLUMN_ID + "), "
                     + "foreign key(" + COLUMN_FIGHTER2 + ")" + " references " + TABLE_FIGHTERS
-                    + "(" + COLUMN_ID + "));";
+                    + "(" + COLUMN_ID + "), "
+                    + "foreign key(" + COLUMN_WINNING_FIGHTER + ")" + " references " + TABLE_FIGHTERS
+                    + "(" + COLUMN_ID + ")"
+                    + ");";
 
 //    private static final String CREATE_TABLE_SCORES =
 //            "CREATE TABLE " + TABLE_SCORES + "("

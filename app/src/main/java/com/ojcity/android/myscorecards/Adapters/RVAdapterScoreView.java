@@ -9,6 +9,7 @@ import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.NumberPicker;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
@@ -155,9 +156,29 @@ public class RVAdapterScoreView extends RecyclerView.Adapter<RVAdapterScoreView.
             }
         });
 
+        if (match.isEarlyStoppage()) {
+            if (match.getWinnerFighterId() == match.getFighter1().getId()
+                    && match.getRoundStoppage() == i) {
+                scoreViewHolder.fighter1KO.setVisibility(View.VISIBLE);
+                scoreViewHolder.fighter2KO.setVisibility(View.INVISIBLE);
+            } else if (match.getWinnerFighterId() == match.getFighter2().getId()
+                    && match.getRoundStoppage() == i) {
+                scoreViewHolder.fighter2KO.setVisibility(View.VISIBLE);
+                scoreViewHolder.fighter1KO.setVisibility(View.INVISIBLE);
+            } else {
+                scoreViewHolder.fighter1KO.setVisibility(View.INVISIBLE);
+                scoreViewHolder.fighter2KO.setVisibility(View.INVISIBLE);
+            }
+        }
+
     }
 
     private void markKO(final int round, final ScoreViewHolder scoreViewHolder) {
+
+        match.setEarlyStoppage(true);
+        match.setRoundStoppage(round);
+        match.setWinnerFighterId(match.getFighter1().getId());
+
         // mark the remaining rounds 0-0
         for (int i = round + 1; i < getItemCount(); i++) {
             match.getFighter1Scores().set(i, 0);
@@ -236,6 +257,8 @@ public class RVAdapterScoreView extends RecyclerView.Adapter<RVAdapterScoreView.
         RadioButton fighter1Radio;
         RadioButton fighter2Radio;
         RadioButton tieRadio;
+        ImageView fighter1KO;
+        ImageView fighter2KO;
 
         ScoreViewHolder(View itemView) {
             super(itemView);
@@ -252,6 +275,11 @@ public class RVAdapterScoreView extends RecyclerView.Adapter<RVAdapterScoreView.
             fighter1Radio = (RadioButton) itemView.findViewById(R.id.fighter1_radio);
             fighter2Radio = (RadioButton) itemView.findViewById(R.id.fighter2_radio);
             tieRadio = (RadioButton) itemView.findViewById(R.id.tie_radio);
+            fighter1KO = (ImageView) itemView.findViewById(R.id.fighter1_ko);
+            fighter2KO = (ImageView) itemView.findViewById(R.id.fighter2_ko);
+
+            fighter1KO.setVisibility(View.INVISIBLE);
+            fighter2KO.setVisibility(View.INVISIBLE);
 
         }
     }

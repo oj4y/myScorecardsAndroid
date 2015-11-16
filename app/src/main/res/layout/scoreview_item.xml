@@ -4,10 +4,10 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="?android:selectableItemBackground"
+    android:paddingBottom="8dp"
     android:paddingLeft="16dp"
     android:paddingRight="16dp"
-    android:paddingTop="8dp"
-    android:paddingBottom="8dp">
+    android:paddingTop="8dp">
 
     <android.support.v7.widget.CardView
         android:id="@+id/cv"
@@ -34,49 +34,56 @@
                 android:layout_height="1dp"
                 android:background="@android:color/darker_gray" />
 
-            <!--<RelativeLayout-->
-                <!--android:layout_width="wrap_content"-->
-                <!--android:layout_height="wrap_content"-->
-                <!--android:layout_gravity="center_horizontal">-->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <RadioGroup
+                    android:id="@+id/radio_group"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_horizontal"
+                    android:orientation="horizontal">
+
+                    <RadioButton
+                        android:id="@+id/fighter1_radio"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Fighter 1" />
+
+                    <RadioButton
+                        android:id="@+id/tie_radio"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Tie" />
+
+                    <RadioButton
+                        android:id="@+id/fighter2_radio"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Fighter 2" />
+
+                </RadioGroup>
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="vertical">
+                    android:gravity="center"
+                    android:orientation="horizontal">
 
-                    <RadioGroup
-                        android:id="@+id/radio_group"
-                        android:gravity="center_horizontal"
-                        android:layout_width="match_parent"
+                    <ImageView
+                        android:id="@+id/fighter1_ko"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:orientation="horizontal">
-
-                        <RadioButton
-                            android:id="@+id/fighter1_radio"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="Fighter 1" />
-
-                        <RadioButton
-                            android:id="@+id/tie_radio"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="Tie" />
-
-                        <RadioButton
-                            android:id="@+id/fighter2_radio"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="Fighter 2" />
-
-                    </RadioGroup>
-
-                    <!-- number pickers -->
+                        android:paddingRight="50dp"
+                        android:src="@drawable/ic_done"
+                        android:tint="@color/primary" />
 
                     <LinearLayout
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_gravity="center_horizontal"
+                        android:gravity="center"
                         android:orientation="horizontal">
 
                         <TextView
@@ -89,12 +96,6 @@
                             android:hint="10"
                             android:maxLength="2"
                             android:textSize="32sp" />
-
-                        <!--<NumberPicker-->
-                            <!--android:id="@+id/fighter1_score"-->
-                            <!--android:layout_width="wrap_content"-->
-                            <!--android:layout_height="wrap_content"-->
-                            <!--android:inputType="number" />-->
 
                         <TextView
                             android:id="@+id/dash"
@@ -109,24 +110,26 @@
                             android:id="@+id/fighter2_score"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:gravity="center"
                             android:layout_gravity="center_vertical"
                             android:layout_margin="8dp"
+                            android:gravity="center"
                             android:hint="9"
                             android:maxLength="2"
                             android:textSize="32sp" />
 
-                        <!--<NumberPicker-->
-                            <!--android:id="@+id/fighter2_score"-->
-                            <!--android:layout_width="wrap_content"-->
-                            <!--android:layout_height="wrap_content"-->
-                            <!--android:inputType="number" />-->
-
                     </LinearLayout>
+
+                    <ImageView
+                        android:id="@+id/fighter2_ko"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:paddingLeft="50dp"
+                        android:src="@drawable/ic_done"
+                        android:tint="@color/primary" />
 
                 </LinearLayout>
 
-            <!--</RelativeLayout>-->
+            </LinearLayout>
 
         </LinearLayout>
 

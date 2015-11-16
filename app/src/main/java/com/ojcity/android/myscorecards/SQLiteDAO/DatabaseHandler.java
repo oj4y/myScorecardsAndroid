@@ -167,21 +167,29 @@ public class DatabaseHandler {
                 // get fighterNames
                 int fighter1Id = cursor.getInt(3);
                 int fighter2Id = cursor.getInt(4);
-
                 // query the db to get fighters
                 Fighter fighter1 = readFighter(fighter1Id);
                 Fighter fighter2 = readFighter(fighter2Id);
+
+                int matchStopped = cursor.getInt(5);
+                int roundStoppage = cursor.getInt(6);
+                int winnerFighterId = cursor.getInt(7);
 
                 // set the values
                 match.setFighter1(fighter1);
                 match.setFighter2(fighter2);
                 match.setId(matchId);
                 match.setDateLong(date);
+                if (matchStopped == 1) {
+                    match.setEarlyStoppage(true);
+                    match.setRoundStoppage(roundStoppage);
+                    match.setWinnerFighterId(winnerFighterId);
+                }
 
                 // get scores
                 // score columns start at columns 5 to 34
                 // probably dual counters
-                for (int i = 5, k = 1; i < 35 && k <= numberOfRounds; i += 2, k++) {
+                for (int i = 8, k = 1; i < 38 && k <= numberOfRounds; i += 2, k++) {
                     int fighter1RoundScore = cursor.getInt(i);
                     int fighter2RoundScore = cursor.getInt(i + 1);
                     match.getFighter1Scores().add(fighter1RoundScore);
@@ -256,7 +264,7 @@ public class DatabaseHandler {
                 int fighter1Id = cursor.getInt(3);
                 int fighter2Id = cursor.getInt(4);
 
-                String bothFighters = cursor.getString(37);
+                String bothFighters = cursor.getString(40);
                 int delimiter = bothFighters.indexOf(',');
 
                 String fighter1Name;
@@ -283,7 +291,7 @@ public class DatabaseHandler {
                 match.setNumberOfRounds(rounds);
                 match.setDateLong(date);
                 // scores at indices 5 to 34
-                for(int i = 5, k = 1; i < 35 && k <= rounds; i += 2, k++) {
+                for (int i = 8, k = 1; i < 38 && k <= rounds; i += 2, k++) {
                     match.getFighter1Scores().add(cursor.getInt(i));
                     match.getFighter2Scores().add(cursor.getInt(i+1));
                 }
@@ -314,6 +322,30 @@ public class DatabaseHandler {
             matchContentValues.put(columnFighter1ScoreRound, match.getFighter1Scores().get(i));
             matchContentValues.put(columnFighter2ScoreRound, match.getFighter2Scores().get(i));
         }
+
+        int resultRowsAffected = database.update(dbHelper.TABLE_MATCHES, matchContentValues,
+                dbHelper.COLUMN_ID + "=" + match.getId(), null);
+
+        Log.v(TAG, "rows updated: " + Long.toString(resultRowsAffected));
+
+    }
+
+    public void updateStoppage(Match match) {
+
+        // get contentvalues from given match
+        ContentValues matchContentValues = new ContentValues();
+
+        int earlyStoppageAsInt = -1;
+
+        if (match.isEarlyStoppage())
+            earlyStoppageAsInt = 1;
+        else {
+            earlyStoppageAsInt = 0;
+        }
+
+        matchContentValues.put("earlyStoppage", earlyStoppageAsInt);
+        matchContentValues.put("roundStoppage", match.getRoundStoppage());
+        matchContentValues.put("winningFighter", match.getWinnerFighterId());
 
         int resultRowsAffected = database.update(dbHelper.TABLE_MATCHES, matchContentValues,
                 dbHelper.COLUMN_ID + "=" + match.getId(), null);
