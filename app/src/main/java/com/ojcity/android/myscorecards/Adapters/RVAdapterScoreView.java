@@ -35,6 +35,11 @@ public class RVAdapterScoreView extends RecyclerView.Adapter<RVAdapterScoreView.
     private boolean[] scoreAdjusted;
     private NumberPicker fighter1Picker;
     private NumberPicker fighter2Picker;
+    private RadioGroup koRadioGroup;
+    private RadioButton koRadioFighter1;
+    private RadioButton koRadioFighter2;
+
+
     // constructor
     public RVAdapterScoreView(ScoreActivity scoreActivity, Context context, Match match) {
         this.activity = scoreActivity;
@@ -146,7 +151,6 @@ public class RVAdapterScoreView extends RecyclerView.Adapter<RVAdapterScoreView.
                         displayEditScore(i, scoreViewHolder);
                         break;
                     case R.id.action_mark_stoppage:
-                        // TODO
                         markKO(i, scoreViewHolder);
                         break;
                     default:
@@ -156,28 +160,29 @@ public class RVAdapterScoreView extends RecyclerView.Adapter<RVAdapterScoreView.
             }
         });
 
-        if (match.isEarlyStoppage()) {
-            if (match.getWinnerFighterId() == match.getFighter1().getId()
-                    && match.getRoundStoppage() == i) {
+        if (match.isEarlyStoppage())
+            setKOmarker(scoreViewHolder, i);
+
+    }
+
+    private void setKOmarker(ScoreViewHolder scoreViewHolder, int i) {
+        if (match.getRoundStoppage() == i) {
+            if (match.getWinnerFighterId() == match.getFighter1().getId()) {
                 scoreViewHolder.fighter1KO.setVisibility(View.VISIBLE);
                 scoreViewHolder.fighter2KO.setVisibility(View.INVISIBLE);
-            } else if (match.getWinnerFighterId() == match.getFighter2().getId()
-                    && match.getRoundStoppage() == i) {
+            } else if (match.getWinnerFighterId() == match.getFighter2().getId()) {
                 scoreViewHolder.fighter2KO.setVisibility(View.VISIBLE);
                 scoreViewHolder.fighter1KO.setVisibility(View.INVISIBLE);
-            } else {
-                scoreViewHolder.fighter1KO.setVisibility(View.INVISIBLE);
-                scoreViewHolder.fighter2KO.setVisibility(View.INVISIBLE);
             }
+        } else {
+            scoreViewHolder.fighter1KO.setVisibility(View.INVISIBLE);
+            scoreViewHolder.fighter2KO.setVisibility(View.INVISIBLE);
         }
-
     }
 
     private void markKO(final int round, final ScoreViewHolder scoreViewHolder) {
 
-        match.setEarlyStoppage(true);
-        match.setRoundStoppage(round);
-        match.setWinnerFighterId(match.getFighter1().getId());
+        displayWhoKnockedOut(round, scoreViewHolder);
 
         // mark the remaining rounds 0-0
         for (int i = round + 1; i < getItemCount(); i++) {
@@ -189,6 +194,53 @@ public class RVAdapterScoreView extends RecyclerView.Adapter<RVAdapterScoreView.
         }
         activity.updateTotals();
         activity.refreshScoreView();
+    }
+
+    private void displayWhoKnockedOut(final int round, final ScoreViewHolder scoreViewHolder) {
+        MaterialDialog materialDialog = new MaterialDialog.Builder(activity)
+                .title("Who won?")
+                .customView(R.layout.ko_picker, false)
+                .positiveText("OK")
+                .onPositive(new MaterialDialog.SingleButtonCallback() {
+                    @Override
+                    public void onClick(MaterialDialog materialDialog, DialogAction dialogAction) {
+                        match.setEarlyStoppage(true);
+                        match.setRoundStoppage(round);
+
+                        if (koRadioGroup.getCheckedRadioButtonId() == R.id.ko_fighter1_radio)
+                            match.setWinnerFighterId(match.getFighter1().getId());
+                        else if (koRadioGroup.getCheckedRadioButtonId() == R.id.ko_fighter2_radio)
+                            match.setWinnerFighterId(match.getFighter2().getId());
+
+                        // remove current KO marker, if any
+                        if (match.isEarlyStoppage())
+                            setKOmarker(scoreViewHolder, match.getRoundStoppage());
+                        // set KOmarker on new one
+                        setKOmarker(scoreViewHolder, round);
+
+                        activity.updateKO();
+
+                        Log.v(TAG, "Positive onClick");
+                    }
+                })
+                .build();
+
+        // init the view
+        koRadioGroup = (RadioGroup) materialDialog.getCustomView().findViewById(R.id.ko_radio_group);
+        koRadioFighter1 = (RadioButton) materialDialog.getCustomView().findViewById(R.id.ko_fighter1_radio);
+        koRadioFighter2 = (RadioButton) materialDialog.getCustomView().findViewById(R.id.ko_fighter2_radio);
+        koRadioFighter1.setText(match.getFighter1().getName());
+        koRadioFighter2.setText(match.getFighter2().getName());
+
+        if (match.getWinnerFighterId() == match.getFighter1().getId()) {
+            koRadioGroup.check(R.id.ko_fighter1_radio);
+        } else if (match.getWinnerFighterId() == match.getFighter2().getId()) {
+            koRadioGroup.check(R.id.ko_fighter2_radio);
+        } else {
+            koRadioGroup.clearCheck();
+        }
+
+        materialDialog.show();
     }
 
     private void displayEditScore(final int i, final ScoreViewHolder scoreViewHolder) {

@@ -223,6 +223,7 @@ public class DatabaseHandler {
                 String fighterName = cursor.getString(1);
 
                 // add to fighter object
+                fighter.setId(fighterId);
                 fighter.setName(fighterName);
 
             } while(cursor.moveToNext());

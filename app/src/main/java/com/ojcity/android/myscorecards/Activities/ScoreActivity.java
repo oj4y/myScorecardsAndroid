@@ -94,6 +94,13 @@ public class ScoreActivity extends AppCompatActivity {
         rv.getAdapter().notifyDataSetChanged();
     }
 
+    public void updateKO() {
+        dataSource.open();
+        dataSource.updateStoppage(ourMatch);
+        dataSource.close();
+        refreshScoreView();
+    }
+
     @Override
     public void onPause() {
         rv.getAdapter().notifyDataSetChanged();
